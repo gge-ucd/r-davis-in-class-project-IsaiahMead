@@ -1,5 +1,4 @@
-Isaiah Thalmayer
-he/him/his
-Mycorrhizae in a restoration context
+Isaiah Thalmayer  
+he/him/his  
+Mycorrhizae in the context of ecological restoration  
 
-This is an edit!
