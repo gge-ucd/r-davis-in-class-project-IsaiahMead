@@ -113,3 +113,56 @@ pivot_wider(temp_df,id_cols = 'plot_id',names_from = 'year',values_from = 'n')
 surveys %>% group_by(plot_id,year) %>% summarize(distinct_genus = n_distinct(genus))
 
 surveys %>% group_by(plot_id,year) %>% summarize(length(unique(genus)))
+
+#1
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+  geom_violin(alpha = 0) +
+  geom_jitter(alpha = 0.3, color = "tomato")
+# adding violin
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+  geom_jitter(alpha = 0.1, color = "tomato") +
+  geom_violin(alpha = 0)
+
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+  geom_jitter(alpha = 0.3, color = "tomato") +
+   geom_violin(alpha = 0) +
+  theme_classic() +
+  scale_y_log10()
+
+#3
+surveys_complete %>% filter(species_id == 'NL' | species_id =='PL') %>% 
+ggplot(mapping = aes(x = species_id, y = hindfoot_length)) +
+  geom_violin(alpha = 0) +
+  geom_jitter(alpha = 0.3, mapping = aes(color = plot_id)) +
+  theme_classic()
+
+## plotis is numeric but want it to be categorical
+
+hindfoot_survey <- surveys_complete %>%
+  # inclusive is & vs "or" |
+  filter(species_id == "NL" | species_id == "PF")
+
+hindfoot_survey$plot_factor <- as.factor(hindfoot_survey$plot_id)
+
+ggplot(data = hindfoot_survey,
+       mapping = aes(x = species_id, y = hindfoot_length)) +
+  geom_boxplot(alpha = 0.1) +
+  geom_jitter(alpha = 0.3, mapping = aes(color = plot_factor))
+
+surveys_complete %>%
+  # inclusive is & vs "or" |
+  filter(species_id == "NL" | species_id == "PF") %>%
+  mutate(plot_factor = as.factor(plot_id)) %>%
+  ggplot(mapping = aes(x = species_id, y = hindfoot_length)) +
+  geom_boxplot(alpha = 0.1) +
+  geom_jitter(alpha = 0.3, mapping = aes(color = plot_id))
+
+surveys_complete %>%
+  # inclusive is & vs "or" |
+  filter(species_id == "NL" | species_id == "PF") %>%
+  ggplot(mapping = aes(x = species_id, y = hindfoot_length)) +
+  geom_boxplot(alpha = 0.1) +
+  geom_jitter(alpha = 0.3, mapping = aes(color = as.factor(plot_id))) + 
+  labs(x = "Species ID", y = "Hindfoot Length", title = "Boxplot", color = "Plot ID", theme_classic(), theme(axis.title.x = element_text(angle = 45))
+
+       
